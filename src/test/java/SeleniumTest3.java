@@ -1,29 +1,19 @@
+import base.TestBase;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.remote.DesiredCapabilities;
 import org.testng.Assert;
-import org.testng.annotations.*;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Test;
 
-import static java.lang.System.setProperty;
+public class SeleniumTest3 {
 
-public class SeleniumTest {
-
-    private WebDriver driver;
-
-    @BeforeMethod(alwaysRun = true)
-    public void setUp() {
-        driver = new ChromeDriver();
-    }
-
-    @AfterMethod(alwaysRun = true)
-    public void tearDown() {
-        driver.close();
-    }
-
-    @Test(groups = {"smoke"})
+    @Test(invocationCount = 3, threadPoolSize = 3)
     public void test1() {
+        WebDriver driver = new ChromeDriver();
+
         driver.manage().window().maximize();
 
         driver.navigate().to("https://www.epam.com");
@@ -36,5 +26,7 @@ public class SeleniumTest {
 
         Assert.assertTrue(menuButton.isDisplayed());
         Assert.assertEquals(menuButton.getText(), "MENU");
+
+        driver.close();
     }
 }
